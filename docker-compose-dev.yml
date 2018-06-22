@@ -29,11 +29,6 @@ services:
       - DATABASE_URL=mysql://rpi:raspberry@192.168.0.194/temperature_dev
       - DATABASE_TEST_URL=mysql://rpi:raspberry@192.168.0.194/temperature_test
       - SENSOR_URL=http://192.168.99.100:5001
-    depends_on:
-      - sensor
-    links:
-      - sensor
-
 
   client:
     container_name: client
