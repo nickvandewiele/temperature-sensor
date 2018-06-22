@@ -1,19 +1,21 @@
-import requests
+import os
 import time
+import requests
+import logging
 
-url = 'http://localhost:5001/collector'
-
-SLEEP = 10.
+COLLECTOR_URL = os.environ['COLLECTOR_URL']
+SLEEP = float(os.environ['SLEEP'])
 
 def main():
 
 	while True:
 		
-		print('Collecting sensor value!')
-		resp = requests.get(url)
+		logging.info('Collecting sensor value!')
+		resp = requests.get(COLLECTOR_URL + '/collector')
 		data = resp.json()
-		print(data)
+		logging.info(data)
 
+		logging.info('Sleeping for {} seconds...'.format(SLEEP))
 		time.sleep(SLEEP)
 
 if __name__ == '__main__':

@@ -1,11 +1,11 @@
+import os
 import requests
-import json
 
-url = 'http://localhost:5000/sensor'
+SENSOR_URL = os.environ['SENSOR_URL']
 
 def poll():
 
-	resp = requests.get(url)
+	resp = requests.get(SENSOR_URL + '/sensor')
 	data = resp.json()
 
 	if data['status'] == 'success':

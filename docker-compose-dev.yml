@@ -1,0 +1,51 @@
+version: '3.3'
+
+services:
+
+  sensor:
+    container_name: sensor
+    build:
+      context: ./services/sensor
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/sensor:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - APP_SETTINGS=project.config.DevelopmentConfig
+
+
+  collector:
+    container_name: collector
+    build:
+      context: ./services/collector
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/collector:/usr/src/app'
+    ports:
+      - 5002:5000
+    environment:
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=mysql://rpi:raspberry@192.168.0.194/temperature_dev
+      - DATABASE_TEST_URL=mysql://rpi:raspberry@192.168.0.194/temperature_test
+      - SENSOR_URL=http://192.168.99.100:5001
+    depends_on:
+      - sensor
+    links:
+      - sensor
+
+
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/client:/usr/src/app'
+    environment:
+      - SLEEP=10
+      - COLLECTOR_URL=http://192.168.99.100:5002
+    depends_on:
+      - collector
+    links:
+      - collector
