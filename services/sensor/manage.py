@@ -17,10 +17,5 @@ def test():
         return 0
     return 1
 
-@cli.command()
-def start_ss():
-	sensor.begin()
-
-
 if __name__ == '__main__':
     cli()

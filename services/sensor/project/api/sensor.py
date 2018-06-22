@@ -1,14 +1,18 @@
 
 class SensorExt(object):
 
-  def __init__(self, app=None, test=True):
+  def __init__(self, app=None):
       self.app = app
       if app is not None:
           self.init_app(app)
 
-      self.sensor = MockSensor() if test else get_real_sensor()
+      
 
   def init_app(self, app):
+
+      isTest = app.config['TESTING'] is True
+      self.sensor = MockSensor() if isTest else get_real_sensor()
+      self.sensor.begin()
       
       # Use the newstyle teardown_appcontext if it's available,
       # otherwise fall back to the request context
@@ -19,9 +23,6 @@ class SensorExt(object):
 
   def teardown(self, exception):
       pass
-
-  def begin(self):
-    self.sensor.begin()
 
   def read(self):
     return self.sensor.readTempC()

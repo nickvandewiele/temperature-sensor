@@ -4,7 +4,7 @@ from flask import Flask
 
 from project.api.sensor import SensorExt
 
-sensor = SensorExt(test=True)
+sensor = SensorExt()
 
 def create_app(script_info=None):
 
@@ -12,8 +12,8 @@ def create_app(script_info=None):
     app = Flask(__name__)
 
     # set config
-    app_settings = os.getenv('APP_SETTINGS')
-    app.config.from_object(app_settings)
+    # app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object('project.config.TestingConfig')
 
     # set up extensions
     sensor.init_app(app)
