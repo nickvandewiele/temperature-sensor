@@ -28,7 +28,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=mysql://rpi:raspberry@192.168.0.194/temperature_dev
       - DATABASE_TEST_URL=mysql://rpi:raspberry@192.168.0.194/temperature_test
-      - SENSOR_URL=http://192.168.99.100:5001
+      - SENSOR_URL=http://192.168.0.148:5001
 
   client:
     container_name: client
@@ -39,8 +39,6 @@ services:
       - './services/client:/usr/src/app'
     environment:
       - SLEEP=10
-      - COLLECTOR_URL=http://192.168.99.100:5002
+      - COLLECTOR_URL=http://collector:5000
     depends_on:
-      - collector
-    links:
       - collector

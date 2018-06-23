@@ -39,8 +39,6 @@ services:
       - './services/client:/usr/src/app'
     environment:
       - SLEEP=10
-      - COLLECTOR_URL=http://192.168.99.100:5002
+      - COLLECTOR_URL=http://collector:5000
     depends_on:
-      - collector
-    links:
       - collector

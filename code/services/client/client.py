@@ -4,7 +4,9 @@ import requests
 import logging
 
 COLLECTOR_URL = os.environ['COLLECTOR_URL']
-SLEEP = float(os.environ['SLEEP'])
+SLEEP = 10.#float(os.environ['SLEEP'])
+
+logging.getLogger().setLevel(logging.DEBUG)
 
 def main():
 
