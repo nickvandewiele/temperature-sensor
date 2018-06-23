@@ -1,12 +1,12 @@
 
 import datetime
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, current_app
 from sqlalchemy import exc
 
 from project import db
 from project.api.models import Temperature
-from project.api.query import poll
+from project.api.poll import poll
 
 collector_blueprint = Blueprint('collector', __name__)
 
@@ -20,6 +20,7 @@ def ping_pong():
 
 @collector_blueprint.route('/collector', methods=['GET'])
 def collect():
+    current_app.logger.info('Hello from the /collector route!')
 
     response_object = {
         'status': 'fail',
@@ -27,7 +28,9 @@ def collect():
     }
 
     try:       
+        current_app.logger.info('Polling the sensor...')
         value = poll()
+        current_app.logger.info('Collected value is: {}'.format(value))
         db.session.add(Temperature(UTCDateTime = datetime.datetime.utcnow(), value = value))
         db.session.commit()
         response_object = {
