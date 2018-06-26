@@ -13,7 +13,7 @@ def main():
 	while True:
 		
 		logging.info('Collecting sensor value!')
-		resp = requests.get(COLLECTOR_URL + '/collector')
+		resp = requests.get(COLLECTOR_URL + '/collect')
 		data = resp.json()
 		logging.info(data)
 

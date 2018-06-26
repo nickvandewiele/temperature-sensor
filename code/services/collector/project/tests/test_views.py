@@ -8,7 +8,7 @@ class TestCollectorService(BaseTestCase):
 
     def test_ping(self):
         """Ensure the /ping route behaves correctly."""
-        response = self.client.get('/collector/ping')
+        response = self.client.get('/ping')
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)
         self.assertIn('pong!', data['message'])
@@ -19,7 +19,7 @@ class TestCollectorService(BaseTestCase):
         """Ensure collect route behaves correctly."""
         
         with self.client:
-            response = self.client.get('/collector')
+            response = self.client.get('/collect')
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertIn('success', data['status'])

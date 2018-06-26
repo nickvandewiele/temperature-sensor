@@ -11,20 +11,20 @@ from project.api.poll import poll
 collector_blueprint = Blueprint('collector', __name__)
 
 
-@collector_blueprint.route('/collector/ping', methods=['GET'])
+@collector_blueprint.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify({
         'status': 'success',
         'message': 'pong!'
     })
 
-@collector_blueprint.route('/collector', methods=['GET'])
+@collector_blueprint.route('/collect', methods=['GET'])
 def collect():
-    current_app.logger.info('Hello from the /collector route!')
+    current_app.logger.info('Hello from the /collect route!')
 
     response_object = {
         'status': 'fail',
-        'message': 'Could not read collector value...'
+        'message': 'Could not read collect value...'
     }
 
     try:       
