@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+
+  collector:
+    container_name: collector
+    build:
+      context: ./services/collector
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/collector:/usr/src/app'
+    environment:
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=mysql://rpi:raspberry@{IP-of-db-server}/temperature_dev
+      - DATABASE_TEST_URL=mysql://rpi:raspberry@{IP-of-db-server}/temperature_test
+      - SENSOR_URL=http://{IP-of-the-RPI}:5001
+
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/client:/usr/src/app'
+    environment:
+      - SLEEP=10
+      - COLLECTOR_URL=http://collector:5000
+    depends_on:
+      - collector
