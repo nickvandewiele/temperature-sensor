@@ -11,9 +11,9 @@ services:
       - './services/collector:/usr/src/app'
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=mysql://rpi:raspberry@{IP-of-db-server}/temperature_dev
-      - DATABASE_TEST_URL=mysql://rpi:raspberry@{IP-of-db-server}/temperature_test
-      - SENSOR_URL=http://{IP-of-the-RPI}:5001
+      - DATABASE_URL=mysql://rpi:raspberry@192.168.0.194/temperature_dev
+      - DATABASE_TEST_URL=mysql://rpi:raspberry@192.168.0.194/temperature_test
+      - SENSOR_URL=http://192.168.0.148:5001
 
   client:
     container_name: client
