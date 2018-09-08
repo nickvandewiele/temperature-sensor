@@ -3,6 +3,7 @@ import os
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask.logging import default_handler
+from flask_migrate import Migrate
 
 class RequestFormatter(logging.Formatter):
     def format(self, record):
@@ -19,6 +20,7 @@ default_handler.setFormatter(formatter)
 
 # instantiate db
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app(script_info=None):
 
@@ -31,6 +33,7 @@ def create_app(script_info=None):
 
     # set up extensions
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # register blueprints
     from project.api.views import collector_blueprint

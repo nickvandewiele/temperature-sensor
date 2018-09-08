@@ -31,7 +31,7 @@ def collect():
         current_app.logger.info('Polling the sensor...')
         value = poll()
         current_app.logger.info('Collected value is: {}'.format(value))
-        db.session.add(Temperature(UTCDateTime = datetime.datetime.utcnow(), value = value))
+        db.session.add(Temperature(LocalDateTime = datetime.datetime.now(), value = value))
         db.session.commit()
         response_object = {
             'status': 'success',
