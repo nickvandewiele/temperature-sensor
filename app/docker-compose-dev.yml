@@ -14,6 +14,7 @@ services:
       - DATABASE_URL=mysql://rpi:raspberry@192.168.0.194/temperature_dev
       - DATABASE_TEST_URL=mysql://rpi:raspberry@192.168.0.194/temperature_test
       - SENSOR_URL=http://192.168.0.148:5001
+    restart: always
 
   client:
     container_name: client
@@ -23,7 +24,8 @@ services:
     volumes:
       - './services/client:/usr/src/app'
     environment:
-      - SLEEP=10
+      - SLEEP=30
       - COLLECTOR_URL=http://collector:5000
     depends_on:
       - collector
+    restart: always
